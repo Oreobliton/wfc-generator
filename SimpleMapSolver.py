@@ -47,3 +47,8 @@ class SimpleMapSolver:
                 y += 1
             y = 0
             x += 1
+
+    def generate(self):
+        self.fillLookUpTable()
+        self.solve()
+        return self.map
