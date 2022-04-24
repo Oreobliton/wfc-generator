@@ -1,21 +1,25 @@
 import os
 from PIL import Image  
 
-TOTAL_SIZE = 1600
+TOTAL_SIZE = 1000
 TILE_SIZE = 100
 TILE_PATH = "tiles/"
 
-import solver
+from SimpleMapSolver import SimpleMapSolver
 
+mapSolver = SimpleMapSolver(11,7) 
+mapSolver.fillLookUpTable()
+mapSolver.solve()
+mapo = mapSolver.map
+print(*mapo)
 
-mapo = solver.solve()
-#solver.prettyPrint(mapo)
 
 
 def listTiles():
     tileList = [-1] #the first element is error (shouldn't be picked)
     tileNames = os.listdir(TILE_PATH)
     tileNames.sort()
+    print(tileNames)
     for tileName in tileNames:
         im = Image.open(TILE_PATH + tileName)
         im = im.resize((500,500))
@@ -37,7 +41,7 @@ def paintImage():
     tileList = listTiles()
     for i in range(len(mapo)):
         for j in range(len(mapo)):
-            #print(f"{i}:{j}|", end='')
+            print(f"{i}:{j}|", end='')
             img.paste(
                 tileList[mapo[i][j]],
                 (
